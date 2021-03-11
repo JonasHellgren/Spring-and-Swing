@@ -1,0 +1,23 @@
+@startuml
+
+!define DARKBLUE
+!include https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+class Person {
+Logger logger
+long id
+String name
++getId()
++getName()
+}
+
+class GreetingController {
+Logger logger
+String template = "Hello, %s!"
+AtomicLong counter
++greeting()
+}
+
+
+
+@enduml
