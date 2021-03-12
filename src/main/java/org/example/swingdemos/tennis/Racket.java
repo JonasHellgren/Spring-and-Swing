@@ -4,10 +4,10 @@ import java.awt.*;
 
 public class Racket {
 
-    int x = 0;
-    int y = 0;
-    int xa = Settings.BALL_SPEED;
-    Color color=new Color(0);
+    protected int x = 0;
+    protected int y = 0;
+    protected int spdX = Settings.BALL_SPEED;
+    protected Color color=new Color(0);
 
     public Racket(int x, int y) {
         this.x = x;

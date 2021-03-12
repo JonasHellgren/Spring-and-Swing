@@ -1,0 +1,85 @@
+@startuml
+
+!define DARKBLUE
+!include https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+!define CLASSCOMMENT(x) <color:white>x</color>
+!define COMMENT(x) <color:orange>x</color>
+
+class DemoTennis {
+ CLASSCOMMENT(Main object.)
+ TennisFrame frame  COMMENT(Injected dependency)
+ private PlayerService  COMMENT(Injected dependency)
+ GameModel gameModel  COMMENT(Aggregate object)
+ TennisPanel panel  COMMENT(Aggregate object)
+ +runGame COMMENT(Multiple functions calls)
+ }
+
+ note left of DemoTennis
+   Inludes game loop:
+    if gameOver -> gameModel.resetGame
+    gameModel.moveBall
+    gameModel.moveRacket
+    panel.copyModelStates
+    panel.repaint
+ end note
+
+
+ class GameModel {
+  CLASSCOMMENT(Describes physics. A virtual world.)
+  Racket racket
+  private TennisBall
+  boolean gameOver
+  +moveBall COMMENT(Updates ball states)
+  +moveRacket COMMENT(Updates racket states)
+  +collision  COMMENT(Returns true if racket and ball collides)
+  +resetGame COMMENT(Resets ball states)
+  }
+
+  class PlayerService {
+   CLASSCOMMENT(Dummy AI for playing tennis.)
+  +calcSpdRacketRef COMMENT(Multiple calls to functions in services)
+   }
+   
+ class TennisPanel {
+  CLASSCOMMENT(Can be seen as view class.)
+  LinkedList<Dot> dots;
+  Racket racket
+  TennisBall tennisBall
+  +addDot
+  +copyModelStates  COMMENT(Enables copying game model states to panel)
+  +paint  COMMENT(Updates screen according to dots; racket and tennisBall positions)
+   
+  }
+
+
+   class Racket {
+  int x, y;
+  int spdX;
+  Color color;
+ +copyPos COMMENT(Copy position states)
+ +getBounds   COMMENT(For collision detection)
+ }
+ 
+class TennisBall {
+    int x, y;
+   int spdX, spdY;
+   int r;
+   Color color;
+   +copyPos COMMENT(Copy position states)
+   +getBounds   COMMENT(For collision detection)
+  }
+
+     class Dot {
+    int x, y, r;
+    Color color;
+   }
+
+
+DemoTennis -up-> PlayerService
+DemoTennis o-down- GameModel
+DemoTennis o-down TennisPanel
+GameModel -[hidden]-> TennisBall
+GameModel -[hidden]-> Racket
+GameModel -[hidden]-> Dot
+
+@enduml

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 import java.util.Set;
 
 
@@ -34,10 +35,14 @@ public class DemoTennis {
     @Autowired
     private PlayerService playerService;
 
+    GameModel gameModel;
+
+    TennisPanel panel;
+
     @Bean
-    //The runswing() method returns a CommandLineRunner bean that automatically runs the code when
+    //The runGame() method returns a CommandLineRunner bean that automatically runs the code when
     //the application launches
-    public CommandLineRunner runswing() {
+    public CommandLineRunner runGame() {
         return (args) -> {
 
             EventQueue.invokeLater(new Runnable() {
@@ -49,18 +54,24 @@ public class DemoTennis {
             });
 
             //add frame
-            TennisPanel panel = new TennisPanel();
+            panel = new TennisPanel();
             frame.add(panel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            //create balls
+            //create small dots in panel
+            final Random random = new Random();
+            int x,y;
 
-            //create lines
+            for (int i = 0; i < Settings.NOF_DOTS; i++) {
+                x=random.nextInt(Settings.W);  y=random.nextInt(Settings.H);
+                panel.addDot(new Dot(x,y,Settings.DOT_RADIUS));
+            }
+
 
             //create game model
-            Racket racket = new Racket(Settings.W/2,Settings.H-Settings.racketHidth);
+            Racket racket = new Racket(Settings.W/2,Settings.racketHidth);
             TennisBall tennisBall  = new TennisBall(Settings.W/2,Settings.H/2,Settings.BALL_RADIUS,Color.red);
-            GameModel gameModel=new GameModel(racket, tennisBall,panel);
+            gameModel=new GameModel(racket, tennisBall);
 
 
             //"game" loop

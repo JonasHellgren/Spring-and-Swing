@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PlayerService {
+    //Dummy AI for playing tennis.
 
     public int calcSpdRacketRef(GameModel gameModel)  {
 

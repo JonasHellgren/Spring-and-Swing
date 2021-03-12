@@ -3,11 +3,11 @@ package org.example.swingdemos.tennis;
 import java.awt.*;
 
 public class TennisBall {
-     int x=0;
-     int spdx=1;
-     int y=0;
-     int spdy=1;
-     int r=0;
+    protected int x=0;
+    protected int spdx=Settings.BALL_SPEED;
+    protected int y=0;
+    protected int spdy=Settings.BALL_SPEED;
+    protected int r=0;
      Color color=new Color(0);
 
     public TennisBall(int x, int y, int r, Color color) {
