@@ -1,4 +1,4 @@
-package org.example.domain.swingapp2modif2;
+package org.example.swingdemos.swingmanylinessomeballs;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +17,19 @@ import java.util.Random;
 //http://www.edu4java.com/en/game/game3.html
 
 @SpringBootApplication
-public class DemoSwingApplicationModif2 {
+public class DemoSwingManyLinesSomeBalls {
 
-    final int W=1000; final int H=600;
+    final int W=1000; final int H=600;  //frame size
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(DemoSwingApplicationModif2.class)
-                .headless(false)
-                .web(WebApplicationType.NONE)
+        new SpringApplicationBuilder(DemoSwingManyLinesSomeBalls.class)
+                .headless(false)  //allow AWT classes to be instantiated
+                .web(WebApplicationType.NONE)  //prevents the bundling of Tomcat or other Web components
                 .run(args);
     }
 
     @Autowired
-    private DemoFrameModif2 frame;
+    private FrameComponent frame;
 
     @Bean
     //The runswing() method returns a CommandLineRunner bean that automatically runs the code when
@@ -45,31 +45,30 @@ public class DemoSwingApplicationModif2 {
                 }
             });
 
-
+            //add frame
             PanelComponent panel = new PanelComponent();
-            frame.add(panel);
-            frame.setSize(W, H);
-            frame.setVisible(true);
+            frame.add(panel);  frame.setSize(W, H);    frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            //create balls
             panel.addBall(10,10,11);
             panel.addBall(140,30,11,Color.blue);
             panel.addBall(333,333,11,Color.green);
 
-            int x,y,xprev=0,yprev=0;
-            final Random random = new Random();
+            //create lines
+            int x,y,xprev=0,yprev=0;  final Random random = new Random();
 
-            xprev=0; yprev=0;
             for (int i = 0; i < 100; i++) {
                 x=random.nextInt(W);  y=random.nextInt(H);
                 panel.addLine(xprev, yprev, x, y, new Color(1));
                 xprev=x; yprev=y;
             }
 
-
+            //"game" loop
             while (true) {
-                panel.moveBalls();
-                panel.repaint();
-                Thread.sleep(10);
+                panel.moveBalls();  //update of the physics of our world
+                panel.repaint();  // tell the AWT engine to execute the paint method as soon as possible.
+                Thread.sleep(100);  // tells the processor that the thread which is being run must sleep
             }
 
 

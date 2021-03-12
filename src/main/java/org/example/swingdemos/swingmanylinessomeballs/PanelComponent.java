@@ -1,4 +1,4 @@
-package org.example.domain.swingapp2modif2;
+package org.example.swingdemos.swingmanylinessomeballs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,8 +6,8 @@ import java.util.LinkedList;
 
 public class PanelComponent extends JPanel {
 
-    private final LinkedList<Line> lines = new LinkedList<Line>();
-    private final LinkedList<Ball> balls = new LinkedList<Ball>();
+    private final LinkedList<Line> lines = new LinkedList<>();
+    private final LinkedList<Ball> balls = new LinkedList<>();
 
     public void moveBalls() {
         for (Ball ball:balls)
@@ -39,7 +39,6 @@ public class PanelComponent extends JPanel {
 
     public void addLine(int x1, int x2, int x3, int x4, Color color) {
         lines.add(new Line(x1, x2, x3, x4, color));
-        repaint();
     }
 
     public void addBall(int x, int y, int r) {
@@ -48,16 +47,14 @@ public class PanelComponent extends JPanel {
 
     public void addBall(int x, int y, int r, Color color) {
         balls.add(new Ball(x,y, r, color));
-        repaint();
     }
 
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
+        super.paint(g);  //cleans the screen
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        //g.fillOval(x, y, 30, 30);
 
         for (Ball ball:balls) {
             g.setColor(ball.color);

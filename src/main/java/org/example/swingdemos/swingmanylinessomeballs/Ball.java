@@ -1,4 +1,4 @@
-package org.example.domain.swingapp2modif2;
+package org.example.swingdemos.swingmanylinessomeballs;
 
 import java.awt.*;
 
