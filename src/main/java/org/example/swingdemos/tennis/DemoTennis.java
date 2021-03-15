@@ -20,8 +20,6 @@ import java.util.Set;
 @SpringBootApplication
 public class DemoTennis {
 
-    //final int W=1000; final int H=600;  //frame size
-
     public static void main(String[] args) {
         new SpringApplicationBuilder(DemoTennis.class)
                 .headless(false)  //allow AWT classes to be instantiated
@@ -31,12 +29,9 @@ public class DemoTennis {
 
     @Autowired
     private TennisFrame frame;
-
     @Autowired
     private PlayerService playerService;
-
     GameModel gameModel;
-
     TennisPanel panel;
 
     @Bean
@@ -66,8 +61,6 @@ public class DemoTennis {
                 x=random.nextInt(Settings.W);  y=random.nextInt(Settings.H);
                 panel.addDot(new Dot(x,y,Settings.DOT_RADIUS));
             }
-
-
             //create game model
             Racket racket = new Racket(Settings.W/2,Settings.racketHidth);
             TennisBall tennisBall  = new TennisBall(Settings.W/2,Settings.H/2,Settings.BALL_RADIUS,Color.red);
@@ -84,8 +77,6 @@ public class DemoTennis {
                 panel.repaint();  // tell the AWT engine to execute the paint method as soon as possible.
                 Thread.sleep(Settings.DT);  // tells the processor that the thread which is being run must sleep
             }
-
-
         };
     }
 }
