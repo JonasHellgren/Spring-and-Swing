@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 import java.util.Random;
 
 @SpringBootApplication
@@ -27,6 +28,9 @@ public class DemoPlotLine {
     @Autowired
     private FrameLinePlot frame;
 
+    final static int W=1000;
+    final static int H=300;  //frame size
+
     @Bean
     //The runswing() method returns a CommandLineRunner bean that automatically runs the code when
     //the application launches
@@ -37,36 +41,39 @@ public class DemoPlotLine {
                 @Override
                 public void run() {
                     frame.setVisible(true);
-                    frame.setSize(LinePlotSettings.W, LinePlotSettings.H);
+                    frame.setSize(W, H);
                 }
             });
 
             //add frame
             PanelLinePlot panel = new PanelLinePlot();
             frame.add(panel);
-            frame.setSize(LinePlotSettings.W, LinePlotSettings.H);
+            frame.setSize(W, H);
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            /*
-            //create lines
-            int x, y, xprev = 0, yprev = 0;
-            final Random random = new Random();
 
-            for (int i = 0; i < 100; i++) {
-                x = random.nextInt(LinePlotSettings.W);
-                y = random.nextInt(LinePlotSettings.H);
-                panel.addLine(xprev, yprev, x, y, new Color(1));
-                xprev = x;
-                yprev = y;
-            } */
+            //create lines
+            PlotData plotData= LineDataSetter.createPlotDataTwoSubPlots();
+            plotData.setW(W);  plotData.setH(H);
+            panel.setData(plotData);
+
+            //que
+            LinkedList<Double> que = new LinkedList<>();
+            Random r = new Random();
 
             //"game" loop
             while (true) {
                 //panel.paint();
-                Thread.sleep(100);  // tells the processor that the thread which is being run must sleep
-            }
 
+                que.add( r.nextDouble());
+                if (que.size()>5)
+                    que.removeFirst();
+
+                System.out.println("LinkedList:" + que);
+
+                Thread.sleep(1000);  // tells the processor that the thread which is being run must sleep
+            }
         };
     }
 }

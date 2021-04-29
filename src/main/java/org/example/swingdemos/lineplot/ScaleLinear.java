@@ -1,5 +1,8 @@
 package org.example.swingdemos.lineplot;
 
+import lombok.Getter;
+
+@Getter
 public class ScaleLinear {
 //This function uses linear scaling out=m*in+b to relate output to input
 
