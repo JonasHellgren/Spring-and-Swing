@@ -1,5 +1,7 @@
 package org.example.swingdemos.lineplot;
 
+import org.example.swingdemos.lineplotmodel.IntervalEstimate;
+import org.example.swingdemos.lineplotmodel.QueList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -9,10 +11,10 @@ import org.springframework.context.annotation.Bean;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class DemoPlotLine {
@@ -53,40 +55,60 @@ public class DemoPlotLine {
 
 
             //create lines
-            //PlotData plotData= LineDataSetter.createPlotDataTwoSubPlots();
-            //plotData.setW(W);  plotData.setH(H);
-            //panel.setData(plotData);
+            /*LinePlot plotData= LineDataSetter.createPlotDataTwoSubPlots();
+            plotData.setWeight(W);  plotData.setHeight(H);
+            panel.setData(plotData);  */
 
             //que
-            LinkedList<Double> que = new LinkedList<>();
-            Random r = new Random();
+            //LinkedList<Double> que = new LinkedList<>();
+            QueList que1=new QueList(20);
+            QueList que2=new QueList(20);
+            QueList que3=new QueList(20);
+            QueList que4=new QueList(20);
+            IntervalEstimate intervalEstimate =new IntervalEstimate();
 
-            PlotData plotData=new PlotData();
-            LineData line1=new LineData("A", que,que, Color.blue);
+            LinePlot linePlot =new LinePlot();
             SubPlot subplotA=new SubPlot("spA","x-axis","y-axis");
-            plotData.addSubPlot(subplotA);
-            plotData.setW(W);  plotData.setH(H);
+            LineData line1=new LineData("min", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.lightGray);
+            LineData line2=new LineData("max", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.darkGray);
+            LineData line3=new LineData("high", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.orange);
+            LineData line4=new LineData("low", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.yellow);
+            subplotA.addLine(line1);  subplotA.addLine(line2); subplotA.addLine(line3);  subplotA.addLine(line4);
+            linePlot.addSubPlot(subplotA);
+            linePlot.setWeight(W);  linePlot.setHeight(H);
 
             //"game" loop
             while (true) {
-                //panel.paint();
 
-                que.add( r.nextDouble());
-                if (que.size()>25)
-                    que.removeFirst();
+                //generate random number
+                 List<Double> randomNums=new ArrayList<>();
+                double lowLim = 1D;      double highLim = 100D;           int nofNum=10;
+                for (int i = 0; i < nofNum; i++)
+                    randomNums.add(lowLim + new Random().nextDouble() * (highLim - lowLim));
 
-                System.out.println("LinkedList:" + que);
+                System.out.println(randomNums);
 
-                List<Double>  xValues=LineDataSetter.createListWithLinearNumbers(que.size(), 1, que.size());
-                line1=new LineData("A", xValues,que, Color.blue);
-                subplotA.removeLines();
-                subplotA.addLine(line1);
+                DoubleSummaryStatistics stats = randomNums.stream().mapToDouble(a -> a).summaryStatistics();
+                System.out.println("min:"+stats.getMin()+", max:"+stats.getMax()+", max:"+stats.getAverage());
+                List<Double> confInt= intervalEstimate.calc(randomNums,69);
 
-                panel.setData(plotData);
+
+                que1.pushNumber(stats.getMin());
+                que2.pushNumber(stats.getMax());
+                que3.pushNumber(confInt.get(1));
+                que4.pushNumber(confInt.get(0));
+
+
+
+                subplotA.replaceLine("min",new LineData(que1.getNumbersInQue()));
+                subplotA.replaceLine("max",new LineData(que2.getNumbersInQue()));
+                subplotA.replaceLine("high",new LineData(que3.getNumbersInQue()));
+                subplotA.replaceLine("low",new LineData(que4.getNumbersInQue()));
+                panel.setData(linePlot);
                 panel.repaint();
 
 
-                Thread.sleep(1000);  // tells the processor that the thread which is being run must sleep
+                Thread.sleep(5000);  // tells the processor that the thread which is being run must sleep
             }
         };
     }

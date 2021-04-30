@@ -9,21 +9,21 @@ import java.util.logging.Logger;
 
 @Getter
 @Setter
-public class PlotData {
+public class LinePlot {
 
-    private static final Logger logger = Logger.getLogger( PlotData.class.getName() );
-    private int W=1000;
-    private int H=300;  //frame size
-    private int W_MARGIN = 100;
-    private int H_MARGIN_TOP = 50;
-    private int H_MARGIN_BOTTOM = 75;
-    private int Y_BOTTOM = H-H_MARGIN_BOTTOM;
-    private int Y_TOP = H_MARGIN_TOP;
+    private static final Logger logger = Logger.getLogger( LinePlot.class.getName() );
+    private int weight =1000;
+    private int height =300;  //frame size
+    private int wMargin = 100;
+    private int hMarginTop = 50;
+    private int hMarginBottom = 75;
+    private int yBottom = height - hMarginBottom;
+    private int yTop = hMarginTop;
     private String FORMAT_AXIS_NUM="%.2f";
 
     private List<SubPlot> subPlots =new ArrayList<>();
 
-    public PlotData() {
+    public LinePlot() {
         logger.info("plot data object created");
     }
 
@@ -35,6 +35,19 @@ public class PlotData {
     public List<SubPlot> getSubPlots() {
         return subPlots;
     }
+
+    static public List<Double> createLinearList(int nofNum, double rangeMin, double rangeMax)  {
+        List<Double> numList=new ArrayList<>();
+        if (nofNum==1)
+            numList.add(rangeMin);
+        else {
+            for (int i = 0; i < nofNum; i++) {
+                Double value = rangeMin + (rangeMax - rangeMin) * i / (nofNum - 1);
+                numList.add(value);
+            }
+        }
+        return numList;
+    };
 
     @Override
     public String toString() {

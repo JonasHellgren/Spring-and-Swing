@@ -2,11 +2,16 @@ package org.example.swingdemos.lineplot;
 
 import lombok.Getter;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Getter
 public class SubPlot {
+    private static final Logger logger = Logger.getLogger( SubPlot.class.getName() );
+
+
     String name="";
     String xAxisName="";
     String yAxisName="";
@@ -40,6 +45,22 @@ public class SubPlot {
 
     public List<LineData> getLines() {
         return lines;
+    }
+
+    public boolean replaceLine(String name,LineData newLineData ) {
+
+        for (LineData line : lines) {
+            if (line.getName().equals(name)) {
+                int lineIndex=lines.indexOf(line);
+                Color color=lines.get(lineIndex).getColor();
+                newLineData.setName(name);
+                newLineData.setColor(color);
+                lines.set(lineIndex,newLineData);
+                 return true;
+            }
+        }
+        logger.warning("no line name found");
+        return false;
     }
 
     public void removeLines() {
