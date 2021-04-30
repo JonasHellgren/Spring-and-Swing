@@ -1,17 +1,11 @@
 package lineplot;
 
-import org.example.swingdemos.lineplot.LineData;
 import org.example.swingdemos.lineplot.LineDataSetter;
 import org.example.swingdemos.lineplot.PlotData;
-import org.example.swingdemos.lineplot.SubPlotData;
-import org.junit.Ignore;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class TestPlotLines {

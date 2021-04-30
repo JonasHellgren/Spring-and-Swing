@@ -2,7 +2,6 @@ package org.example.swingdemos.lineplot;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +21,18 @@ public class PlotData {
     private int Y_TOP = H_MARGIN_TOP;
     private String FORMAT_AXIS_NUM="%.2f";
 
-    private List<SubPlotData> subPlots =new ArrayList<>();
+    private List<SubPlot> subPlots =new ArrayList<>();
 
     public PlotData() {
         logger.info("plot data object created");
     }
 
-    public void addSubPlot(SubPlotData subPlot) {
+    public void addSubPlot(SubPlot subPlot) {
         logger.info("sub plot added");
         subPlots.add(subPlot);
     }
 
-    public List<SubPlotData> getSubPlots() {
+    public List<SubPlot> getSubPlots() {
         return subPlots;
     }
 
@@ -42,7 +41,7 @@ public class PlotData {
         StringBuilder sb=new StringBuilder();
         sb.append("Number of sub plots:"+subPlots.size());
         sb.append(System.getProperty("line.separator"));
-        for (SubPlotData subPlot:subPlots) {
+        for (SubPlot subPlot:subPlots) {
             sb.append(subPlot.toString());
             sb.append(System.getProperty("line.separator"));
         }

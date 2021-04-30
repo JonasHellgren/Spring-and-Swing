@@ -1,8 +1,5 @@
 package org.example.swingdemos.lineplot;
 
-import org.example.swingdemos.swingmanylinessomeballs.FrameComponent;
-import org.example.swingdemos.swingmanylinessomeballs.PanelComponent;
-import org.example.swingdemos.tennis.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -12,7 +9,9 @@ import org.springframework.context.annotation.Bean;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
@@ -54,23 +53,38 @@ public class DemoPlotLine {
 
 
             //create lines
-            PlotData plotData= LineDataSetter.createPlotDataTwoSubPlots();
-            plotData.setW(W);  plotData.setH(H);
-            panel.setData(plotData);
+            //PlotData plotData= LineDataSetter.createPlotDataTwoSubPlots();
+            //plotData.setW(W);  plotData.setH(H);
+            //panel.setData(plotData);
 
             //que
             LinkedList<Double> que = new LinkedList<>();
             Random r = new Random();
+
+            PlotData plotData=new PlotData();
+            LineData line1=new LineData("A", que,que, Color.blue);
+            SubPlot subplotA=new SubPlot("spA","x-axis","y-axis");
+            plotData.addSubPlot(subplotA);
+            plotData.setW(W);  plotData.setH(H);
 
             //"game" loop
             while (true) {
                 //panel.paint();
 
                 que.add( r.nextDouble());
-                if (que.size()>5)
+                if (que.size()>25)
                     que.removeFirst();
 
                 System.out.println("LinkedList:" + que);
+
+                List<Double>  xValues=LineDataSetter.createListWithLinearNumbers(que.size(), 1, que.size());
+                line1=new LineData("A", xValues,que, Color.blue);
+                subplotA.removeLines();
+                subplotA.addLine(line1);
+
+                panel.setData(plotData);
+                panel.repaint();
+
 
                 Thread.sleep(1000);  // tells the processor that the thread which is being run must sleep
             }

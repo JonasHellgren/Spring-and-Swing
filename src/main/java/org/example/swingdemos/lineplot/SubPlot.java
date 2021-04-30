@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class SubPlotData {
+public class SubPlot {
     String name="";
     String xAxisName="";
     String yAxisName="";
@@ -14,15 +14,15 @@ public class SubPlotData {
     List<Double> yMinMax;
     private List<LineData> lines =new ArrayList<>();
 
-    public SubPlotData(String name) {
+    public SubPlot(String name) {
         this(name,"","",new ArrayList<>(),new ArrayList<>());
     }
 
-    public SubPlotData(String name, String xAxisName,String yAxisName) {
+    public SubPlot(String name, String xAxisName, String yAxisName) {
         this(name,xAxisName,yAxisName,new ArrayList<>(),new ArrayList<>());
     }
 
-    public SubPlotData(String name, String xAxisName, String yAxisName, List<Double> xMinMax, List<Double> yMinMax) {
+    public SubPlot(String name, String xAxisName, String yAxisName, List<Double> xMinMax, List<Double> yMinMax) {
         this.name = name;
         this.xAxisName = xAxisName;
         this.yAxisName = yAxisName;
@@ -41,6 +41,11 @@ public class SubPlotData {
     public List<LineData> getLines() {
         return lines;
     }
+
+    public void removeLines() {
+        lines.clear();
+    }
+
 
     @Override
     public String toString() {
