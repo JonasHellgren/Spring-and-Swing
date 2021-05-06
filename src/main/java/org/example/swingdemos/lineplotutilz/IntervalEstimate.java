@@ -1,4 +1,4 @@
-package org.example.swingdemos.lineplotmodel;
+package org.example.swingdemos.lineplotutilz;
 
 
 import java.util.ArrayList;

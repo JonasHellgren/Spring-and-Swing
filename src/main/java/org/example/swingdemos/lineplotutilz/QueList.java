@@ -1,6 +1,5 @@
-package org.example.swingdemos.lineplotmodel;
+package org.example.swingdemos.lineplotutilz;
 
-import lombok.Getter;
 import lombok.ToString;
 
 import java.util.LinkedList;

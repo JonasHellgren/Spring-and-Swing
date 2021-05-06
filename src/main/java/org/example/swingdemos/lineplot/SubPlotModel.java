@@ -8,26 +8,25 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Getter
-public class SubPlot {
-    private static final Logger logger = Logger.getLogger( SubPlot.class.getName() );
-
+public class SubPlotModel {
+    private static final Logger logger = Logger.getLogger( SubPlotModel.class.getName() );
 
     String name="";
     String xAxisName="";
     String yAxisName="";
     List<Double> xMinMax;
     List<Double> yMinMax;
-    private List<LineData> lines =new ArrayList<>();
+    private List<LineDataModel> lines =new ArrayList<>();
 
-    public SubPlot(String name) {
+    public SubPlotModel(String name) {
         this(name,"","",new ArrayList<>(),new ArrayList<>());
     }
 
-    public SubPlot(String name, String xAxisName, String yAxisName) {
+    public SubPlotModel(String name, String xAxisName, String yAxisName) {
         this(name,xAxisName,yAxisName,new ArrayList<>(),new ArrayList<>());
     }
 
-    public SubPlot(String name, String xAxisName, String yAxisName, List<Double> xMinMax, List<Double> yMinMax) {
+    public SubPlotModel(String name, String xAxisName, String yAxisName, List<Double> xMinMax, List<Double> yMinMax) {
         this.name = name;
         this.xAxisName = xAxisName;
         this.yAxisName = yAxisName;
@@ -35,27 +34,27 @@ public class SubPlot {
         this.yMinMax = yMinMax;
     }
 
-    public void addLine(LineData lineData) {
-        lines.add(lineData);
+    public void addLine(LineDataModel lineDataModel) {
+        lines.add(lineDataModel);
     }
 
     public String getName() {
         return name;
     }
 
-    public List<LineData> getLines() {
+    public List<LineDataModel> getLines() {
         return lines;
     }
 
-    public boolean replaceLine(String name,LineData newLineData ) {
+    public boolean replaceLine(String name, LineDataModel newLineDataModel) {
 
-        for (LineData line : lines) {
+        for (LineDataModel line : lines) {
             if (line.getName().equals(name)) {
                 int lineIndex=lines.indexOf(line);
                 Color color=lines.get(lineIndex).getColor();
-                newLineData.setName(name);
-                newLineData.setColor(color);
-                lines.set(lineIndex,newLineData);
+                newLineDataModel.setName(name);
+                newLineDataModel.setColor(color);
+                lines.set(lineIndex, newLineDataModel);
                  return true;
             }
         }

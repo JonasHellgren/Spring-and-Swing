@@ -1,7 +1,7 @@
 package lineplot;
 
-import org.example.swingdemos.lineplot.LineDataSetter;
-import org.example.swingdemos.lineplot.LinePlot;
+import org.example.swingdemos.runplots.LineDataSetter;
+import org.example.swingdemos.lineplot.LinePlotModel;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,23 +12,23 @@ public class TestPlotLines {
 
     private static final Logger logger = Logger.getLogger( TestPlotLines.class.getName() );
 
-    LinePlot linePlot;
+    LinePlotModel linePlotModel;
 
     @BeforeEach
     public void arrange() {
 
-        linePlot = LineDataSetter.createPlotDataTwoSubPlots();
+        linePlotModel = LineDataSetter.createPlotDataTwoSubPlots();
     }
 
     @Test //@Ignore
     public void showPlotInfo() {
-        System.out.println(linePlot);
+        System.out.println(linePlotModel);
     }
 
     @Test //@Ignore
     public void showPlotData() {
-        System.out.println(linePlot.getSubPlots().get(0).getLines().get(0).getXData());
-        System.out.println(linePlot.getSubPlots().get(0).getLines().get(0).getYData());
+        System.out.println(linePlotModel.getSubPlotModels().get(0).getLines().get(0).getXData());
+        System.out.println(linePlotModel.getSubPlotModels().get(0).getLines().get(0).getYData());
     }
 
 

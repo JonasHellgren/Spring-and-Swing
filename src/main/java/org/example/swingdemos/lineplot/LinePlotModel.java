@@ -9,9 +9,9 @@ import java.util.logging.Logger;
 
 @Getter
 @Setter
-public class LinePlot {
+public class LinePlotModel {
 
-    private static final Logger logger = Logger.getLogger( LinePlot.class.getName() );
+    private static final Logger logger = Logger.getLogger( LinePlotModel.class.getName() );
     private int weight =1000;
     private int height =300;  //frame size
     private int wMargin = 100;
@@ -21,19 +21,19 @@ public class LinePlot {
     private int yTop = hMarginTop;
     private String FORMAT_AXIS_NUM="%.2f";
 
-    private List<SubPlot> subPlots =new ArrayList<>();
+    private List<SubPlotModel> subPlotModels =new ArrayList<>();
 
-    public LinePlot() {
+    public LinePlotModel() {
         logger.info("plot data object created");
     }
 
-    public void addSubPlot(SubPlot subPlot) {
+    public void addSubPlot(SubPlotModel subPlotModel) {
         logger.info("sub plot added");
-        subPlots.add(subPlot);
+        subPlotModels.add(subPlotModel);
     }
 
-    public List<SubPlot> getSubPlots() {
-        return subPlots;
+    public List<SubPlotModel> getSubPlotModels() {
+        return subPlotModels;
     }
 
     static public List<Double> createLinearList(int nofNum, double rangeMin, double rangeMax)  {
@@ -52,10 +52,10 @@ public class LinePlot {
     @Override
     public String toString() {
         StringBuilder sb=new StringBuilder();
-        sb.append("Number of sub plots:"+subPlots.size());
+        sb.append("Number of sub plots:"+ subPlotModels.size());
         sb.append(System.getProperty("line.separator"));
-        for (SubPlot subPlot:subPlots) {
-            sb.append(subPlot.toString());
+        for (SubPlotModel subPlotModel : subPlotModels) {
+            sb.append(subPlotModel.toString());
             sb.append(System.getProperty("line.separator"));
         }
         return sb.toString();

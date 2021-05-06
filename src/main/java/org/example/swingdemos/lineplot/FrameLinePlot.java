@@ -12,12 +12,8 @@ public class FrameLinePlot extends JFrame {
         initComponents();
     }
 
-
     private void initComponents() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Spring Boot with Swing application");
     }
-
-
-
 }

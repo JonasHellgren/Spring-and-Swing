@@ -1,9 +1,5 @@
 package org.example.swingdemos.lineplot;
 
-import org.example.swingdemos.lineplotmodel.ScaleSetter;
-import org.example.swingdemos.lineplotmodel.XScaleSetter;
-import org.example.swingdemos.lineplotmodel.YScaleSetter;
-
 import javax.swing.*;
 import java.awt.*;
 //import java.util.LinkedList;
@@ -17,72 +13,72 @@ import java.awt.*;
 
 
 public class PanelLinePlot extends JPanel {
-    LinePlot linePlot;
+    LinePlotModel linePlotModel;
     int nofSubplots;
 
     private ScaleSetter xScaleSetter=new XScaleSetter();
     private ScaleSetter yScaleSetter=new YScaleSetter();
 
-    public void setData(LinePlot linePlot) {
-        this.linePlot = linePlot;
-        nofSubplots = linePlot.getSubPlots().size();
+    public void setData(LinePlotModel linePlotModel) {
+        this.linePlotModel = linePlotModel;
+        nofSubplots = linePlotModel.getSubPlotModels().size();
     }
 
     public void drawPlot(Graphics2D g2d) {
-        int wSubPlot = xScaleSetter.getWeightSubPlot(linePlot);
+        int wSubPlot = xScaleSetter.getWeightSubPlot(linePlotModel);
         int subPlotId = 0;
-        for (SubPlot subPlot : linePlot.getSubPlots()) {
-            int x0 = linePlot.getWMargin() + subPlotId * (wSubPlot + linePlot.getWMargin());
-            int y0 = linePlot.getHMarginTop();
-            drawSubPlot(subPlot, x0, y0, g2d);
+        for (SubPlotModel subPlotModel : linePlotModel.getSubPlotModels()) {
+            int x0 = linePlotModel.getWMargin() + subPlotId * (wSubPlot + linePlotModel.getWMargin());
+            int y0 = linePlotModel.getHMarginTop();
+            drawSubPlot(subPlotModel, x0, y0, g2d);
             subPlotId++;
         }
     }
 
-    private void drawSubPlot(SubPlot subPlot, int x0, int y0, Graphics2D g2d) {
-        ScaleLinear xScale = xScaleSetter.setScale(linePlot,subPlot,x0,y0);
-        ScaleLinear yScale = yScaleSetter.setScale(linePlot,subPlot,x0,y0);
-        int wSubPlot = xScaleSetter.getWeightSubPlot(linePlot);
-        plotLines(subPlot, g2d, xScale, yScale);
+    private void drawSubPlot(SubPlotModel subPlotModel, int x0, int y0, Graphics2D g2d) {
+        ScaleLinear xScale = xScaleSetter.setScale(linePlotModel, subPlotModel,x0,y0);
+        ScaleLinear yScale = yScaleSetter.setScale(linePlotModel, subPlotModel,x0,y0);
+        int wSubPlot = xScaleSetter.getWeightSubPlot(linePlotModel);
+        plotLines(subPlotModel, g2d, xScale, yScale);
         drawPlotBorder(x0, g2d, wSubPlot);
-        textLabels(subPlot, x0, g2d, xScale, yScale, wSubPlot);
-        textLineLegends(subPlot, x0, g2d);
+        textLabels(subPlotModel, x0, g2d, xScale, yScale, wSubPlot);
+        textLineLegends(subPlotModel, x0, g2d);
     }
 
-    private void textLineLegends(SubPlot subPlot, int x0, Graphics2D g2d) {
+    private void textLineLegends(SubPlotModel subPlotModel, int x0, Graphics2D g2d) {
         int i = 1;
         int fontSize = g2d.getFont().getSize();
-        for (LineData lineData : subPlot.getLines()) {
-            g2d.setColor(lineData.getColor());
-            g2d.drawString(lineData.getName(), x0, fontSize * i);
+        for (LineDataModel lineDataModel : subPlotModel.getLines()) {
+            g2d.setColor(lineDataModel.getColor());
+            g2d.drawString(lineDataModel.getName(), x0, fontSize * i);
             i++;
         }
     }
 
-    private void textLabels(SubPlot subPlot, int x0, Graphics2D g2d, ScaleLinear xScale, ScaleLinear yScale, int wSubPlot) {
+    private void textLabels(SubPlotModel subPlotModel, int x0, Graphics2D g2d, ScaleLinear xScale, ScaleLinear yScale, int wSubPlot) {
         int fontSize = g2d.getFont().getSize();
-        g2d.drawString(subPlot.getXAxisName(), x0 + wSubPlot / 2, linePlot.getYBottom() + fontSize);
-        g2d.drawString(subPlot.getYAxisName(), x0 - linePlot.getWMargin() / 2, linePlot.getYTop() - fontSize);
-        g2d.drawString(subPlot.getName(), x0 + wSubPlot / 2, linePlot.getYTop() - fontSize);
-        g2d.drawString(String.format(linePlot.getFORMAT_AXIS_NUM(), xScale.getD0()), x0, linePlot.getYBottom() + fontSize);
-        g2d.drawString(String.format(linePlot.getFORMAT_AXIS_NUM(), xScale.getD1()), x0 + wSubPlot, linePlot.getYBottom() + fontSize);
-        g2d.drawString(String.format(linePlot.getFORMAT_AXIS_NUM(), yScale.getD0()), x0 - linePlot.getWMargin() / 2, linePlot.getYBottom());
-        g2d.drawString(String.format(linePlot.getFORMAT_AXIS_NUM(), yScale.getD1()), x0 - linePlot.getWMargin() / 2, linePlot.getYTop() + fontSize);
+        g2d.drawString(subPlotModel.getXAxisName(), x0 + wSubPlot / 2, linePlotModel.getYBottom() + fontSize);
+        g2d.drawString(subPlotModel.getYAxisName(), x0 - linePlotModel.getWMargin() / 2, linePlotModel.getYTop() - fontSize);
+        g2d.drawString(subPlotModel.getName(), x0 + wSubPlot / 2, linePlotModel.getYTop() - fontSize);
+        g2d.drawString(String.format(linePlotModel.getFORMAT_AXIS_NUM(), xScale.getD0()), x0, linePlotModel.getYBottom() + fontSize);
+        g2d.drawString(String.format(linePlotModel.getFORMAT_AXIS_NUM(), xScale.getD1()), x0 + wSubPlot, linePlotModel.getYBottom() + fontSize);
+        g2d.drawString(String.format(linePlotModel.getFORMAT_AXIS_NUM(), yScale.getD0()), x0 - linePlotModel.getWMargin() / 2, linePlotModel.getYBottom());
+        g2d.drawString(String.format(linePlotModel.getFORMAT_AXIS_NUM(), yScale.getD1()), x0 - linePlotModel.getWMargin() / 2, linePlotModel.getYTop() + fontSize);
     }
 
     private void drawPlotBorder(int x0, Graphics2D g2d, int wSubPlot) {
         g2d.setColor(Color.black);
-        g2d.drawLine(x0, linePlot.getYBottom(), x0 + wSubPlot, linePlot.getYBottom());
-        g2d.drawLine(x0, linePlot.getYTop(), x0 + wSubPlot, linePlot.getYTop());
-        g2d.drawLine(x0, linePlot.getYBottom(), x0, linePlot.getYTop());
-        g2d.drawLine(x0 + wSubPlot, linePlot.getYBottom(), x0 + wSubPlot, linePlot.getYTop());
+        g2d.drawLine(x0, linePlotModel.getYBottom(), x0 + wSubPlot, linePlotModel.getYBottom());
+        g2d.drawLine(x0, linePlotModel.getYTop(), x0 + wSubPlot, linePlotModel.getYTop());
+        g2d.drawLine(x0, linePlotModel.getYBottom(), x0, linePlotModel.getYTop());
+        g2d.drawLine(x0 + wSubPlot, linePlotModel.getYBottom(), x0 + wSubPlot, linePlotModel.getYTop());
     }
 
-    private void plotLines(SubPlot subPlot, Graphics2D g2d, ScaleLinear xScale, ScaleLinear yScale) {
-        for (LineData lineData : subPlot.getLines()) {
-            double[] line1x = lineData.xData.stream().mapToDouble(d -> d).toArray();
-            double[] line1y = lineData.yData.stream().mapToDouble(d -> d).toArray();
-            g2d.setColor(lineData.getColor());
+    private void plotLines(SubPlotModel subPlotModel, Graphics2D g2d, ScaleLinear xScale, ScaleLinear yScale) {
+        for (LineDataModel lineDataModel : subPlotModel.getLines()) {
+            double[] line1x = lineDataModel.xData.stream().mapToDouble(d -> d).toArray();
+            double[] line1y = lineDataModel.yData.stream().mapToDouble(d -> d).toArray();
+            g2d.setColor(lineDataModel.getColor());
             g2d.drawPolyline(xScale.calcOut(line1x), yScale.calcOut(line1y), line1x.length);
         }
     }

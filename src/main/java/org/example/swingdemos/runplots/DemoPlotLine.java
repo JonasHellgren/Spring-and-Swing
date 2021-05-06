@@ -1,7 +1,8 @@
-package org.example.swingdemos.lineplot;
+package org.example.swingdemos.runplots;
 
-import org.example.swingdemos.lineplotmodel.IntervalEstimate;
-import org.example.swingdemos.lineplotmodel.QueList;
+import org.example.swingdemos.lineplot.*;
+import org.example.swingdemos.lineplotutilz.IntervalEstimate;
+import org.example.swingdemos.lineplotutilz.QueList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -13,10 +14,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
 
-@SpringBootApplication
+
+@SpringBootApplication(scanBasePackages = {"org.example.swingdemos.lineplot"})
 public class DemoPlotLine {
 
     public static void main(String[] args) {
@@ -53,12 +53,6 @@ public class DemoPlotLine {
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-            //create lines
-            /*LinePlot plotData= LineDataSetter.createPlotDataTwoSubPlots();
-            plotData.setWeight(W);  plotData.setHeight(H);
-            panel.setData(plotData);  */
-
             //que
             //LinkedList<Double> que = new LinkedList<>();
             QueList que1=new QueList(20);
@@ -67,15 +61,15 @@ public class DemoPlotLine {
             QueList que4=new QueList(20);
             IntervalEstimate intervalEstimate =new IntervalEstimate();
 
-            LinePlot linePlot =new LinePlot();
-            SubPlot subplotA=new SubPlot("spA","x-axis","y-axis");
-            LineData line1=new LineData("min", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.lightGray);
-            LineData line2=new LineData("max", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.darkGray);
-            LineData line3=new LineData("high", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.orange);
-            LineData line4=new LineData("low", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.yellow);
+            LinePlotModel linePlotModel =new LinePlotModel();
+            SubPlotModel subplotA=new SubPlotModel("spA","x-axis","y-axis");
+            LineDataModel line1=new LineDataModel("min", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.lightGray);
+            LineDataModel line2=new LineDataModel("max", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.darkGray);
+            LineDataModel line3=new LineDataModel("high", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.orange);
+            LineDataModel line4=new LineDataModel("low", Arrays.asList(0d,1d),Arrays.asList(0d,1d), Color.yellow);
             subplotA.addLine(line1);  subplotA.addLine(line2); subplotA.addLine(line3);  subplotA.addLine(line4);
-            linePlot.addSubPlot(subplotA);
-            linePlot.setWeight(W);  linePlot.setHeight(H);
+            linePlotModel.addSubPlot(subplotA);
+            linePlotModel.setWeight(W);  linePlotModel.setHeight(H);
 
             //"game" loop
             while (true) {
@@ -100,11 +94,11 @@ public class DemoPlotLine {
 
 
 
-                subplotA.replaceLine("min",new LineData(que1.getNumbersInQue()));
-                subplotA.replaceLine("max",new LineData(que2.getNumbersInQue()));
-                subplotA.replaceLine("high",new LineData(que3.getNumbersInQue()));
-                subplotA.replaceLine("low",new LineData(que4.getNumbersInQue()));
-                panel.setData(linePlot);
+                subplotA.replaceLine("min",new LineDataModel(que1.getNumbersInQue()));
+                subplotA.replaceLine("max",new LineDataModel(que2.getNumbersInQue()));
+                subplotA.replaceLine("high",new LineDataModel(que3.getNumbersInQue()));
+                subplotA.replaceLine("low",new LineDataModel(que4.getNumbersInQue()));
+                panel.setData(linePlotModel);
                 panel.repaint();
 
 
