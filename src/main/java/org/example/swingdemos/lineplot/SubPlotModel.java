@@ -11,9 +11,9 @@ import java.util.logging.Logger;
 public class SubPlotModel {
     private static final Logger logger = Logger.getLogger( SubPlotModel.class.getName() );
 
-    String name="";
-    String xAxisName="";
-    String yAxisName="";
+    String name;
+    String xAxisName;
+    String yAxisName;
     List<Double> xMinMax;
     List<Double> yMinMax;
     private List<LineDataModel> lines =new ArrayList<>();
