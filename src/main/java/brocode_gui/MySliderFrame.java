@@ -46,6 +46,5 @@ public class MySliderFrame extends JFrame implements ChangeListener {
     @Override
     public void stateChanged(ChangeEvent e) {
         label.setText("Speed = "+ slider.getValue());
-
     }
 }

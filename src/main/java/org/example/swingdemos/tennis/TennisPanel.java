@@ -18,7 +18,6 @@ public class TennisPanel extends JPanel {
         dots.add(dot);
     }
 
-
     public void copyModelStates(GameModel gameModel) {
         racket.copyPos(gameModel.getRacket());
         tennisBall.copyPos(gameModel.getTennisBall());

@@ -1,9 +1,5 @@
 @startuml
-
-!define DARKBLUE
-!include https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
-!define CLASSCOMMENT(x) <color:white>x</color>
-!define COMMENT(x) <color:orange>x</color>
+'https://plantuml.com/class-diagram
 
 class DemoTennis {
  CLASSCOMMENT(Main object.)
