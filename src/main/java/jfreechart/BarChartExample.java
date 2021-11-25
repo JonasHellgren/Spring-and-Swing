@@ -8,6 +8,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class BarChartExample extends JFrame {
 
@@ -30,8 +31,13 @@ public class BarChartExample extends JFrame {
         );
 
         ChartPanel panel=new ChartPanel(chart);
-
+        panel.setBounds(0,0,400,200);
         add(panel);   //setContentPane(panel);
+
+        JPanel bluePanel=new JPanel();
+        bluePanel.setBackground(Color.BLUE);
+        bluePanel.setBounds(0,200,400,200);
+        add(bluePanel);
 
     }
 
@@ -65,6 +71,7 @@ public class BarChartExample extends JFrame {
             BarChartExample example=new BarChartExample("Bar Chart Window");
             example.setSize(400, 400);
             example.setLocationRelativeTo(null);
+            //example.setLayout(null);   //makes the label to not occupy all frame
             example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             example.setVisible(true);
         });
