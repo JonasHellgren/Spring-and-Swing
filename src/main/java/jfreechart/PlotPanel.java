@@ -4,9 +4,11 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
@@ -32,12 +34,10 @@ public class PlotPanel extends JPanel  {
     }
 
 
-    public XYDataset getDataset() {
-        return  dataset;
-    }
-
-    public JFreeChart getCh() {
-        return ch;
+    public void setChartDataFromSeries(XYSeries series) {
+        this.dataset = new XYSeriesCollection(series);
+        XYPlot plot = (XYPlot) ch.getPlot();
+        plot.setDataset(this.dataset);
     }
 
     private JFreeChart createChart(XYDataset dataset) {
